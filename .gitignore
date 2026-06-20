@@ -16,3 +16,5 @@ frontend/.env.local
 .DS_Store
 *.log
 frontend/.env
+
+backend/src/main/resources/application.properties

@@ -3,6 +3,13 @@
 # Version reducida del docker-compose.yml original.
 # El monolito no usa Kafka, Zookeeper, Redis, Prometheus,
 # Grafana ni Zipkin - solo MongoDB y PostgreSQL.
+#
+# IMPORTANTE: las credenciales de abajo son solo para tu
+# entorno LOCAL de desarrollo (contenedores que corren
+# unicamente en tu maquina, sin exposicion a internet).
+# Cambialas por las que prefieras y reflejalas en tu
+# application.properties local.
+#
 # Comando para ejecutar: docker-compose up -d
 # Comando para detener:  docker-compose down
 # ============================================================
@@ -25,15 +32,15 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: ropa_store
-      POSTGRES_USER: ropa_user
-      POSTGRES_PASSWORD: "123456"
+      POSTGRES_DB: modex_local
+      POSTGRES_USER: modex_local_user
+      POSTGRES_PASSWORD: "CAMBIAR_ESTA_PASSWORD"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - modex-network
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ropa_user -d ropa_store" ]
+      test: [ "CMD-SHELL", "pg_isready -U modex_local_user -d modex_local" ]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -44,8 +51,8 @@ services:
     ports:
       - "27017:27017"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: mongo_user
-      MONGO_INITDB_ROOT_PASSWORD: mongo_pass
+      MONGO_INITDB_ROOT_USERNAME: modex_local_user
+      MONGO_INITDB_ROOT_PASSWORD: "CAMBIAR_ESTA_PASSWORD"
       MONGO_INITDB_DATABASE: modex_db
     volumes:
       - mongo_data:/data/db

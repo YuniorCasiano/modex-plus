@@ -1,22 +1,21 @@
 # ============================================================
-# application.properties - Modex Monolito (desarrollo LOCAL)
-# Usa las mismas credenciales que el docker-compose.yml
-# original para que puedas seguir probando localmente con
-# Docker mientras migras.
+# application.properties.example - Modex Monolito (desarrollo LOCAL)
+# Copia este archivo como "application.properties" y ajusta
+# los valores segun tu entorno local. application.properties
+# esta en .gitignore y no se sube al repositorio.
 # ============================================================
 
 spring.application.name=modex-monolith
 server.port=8080
 
 # ── MongoDB - una sola base "modex_db" con varias colecciones ──
-# (users, refresh_tokens, products)
-spring.data.mongodb.uri=mongodb://mongo_user:mongo_pass@localhost:27017/modex_db?authSource=admin
+spring.data.mongodb.uri=mongodb://CAMBIAR_USUARIO:CAMBIAR_PASSWORD@localhost:27017/modex_db?authSource=admin
 spring.data.mongodb.database=modex_db
 
 # ── PostgreSQL - orders e inventory ──
-spring.datasource.url=jdbc:postgresql://localhost:5432/ropa_store
-spring.datasource.username=ropa_user
-spring.datasource.password=123456
+spring.datasource.url=jdbc:postgresql://localhost:5432/CAMBIAR_NOMBRE_BD
+spring.datasource.username=CAMBIAR_USUARIO
+spring.datasource.password=CAMBIAR_PASSWORD
 spring.datasource.driver-class-name=org.postgresql.Driver
 
 # ── JPA ──
@@ -26,7 +25,7 @@ spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 
 # ── JWT ──
-jwt.secret=modex-secret-key-super-segura-256-bits-para-hs256-algorithm
+jwt.secret=CAMBIAR_POR_UNA_CLAVE_LARGA_Y_ALEATORIA_DE_MINIMO_32_CARACTERES
 jwt.expiration=3600000
 jwt.refresh-expiration=604800000
 
