@@ -18,3 +18,5 @@ frontend/.env.local
 frontend/.env
 
 backend/src/main/resources/application.properties
+
+backend/GUIA_DESPLIEGUE.md
