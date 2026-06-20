@@ -1,6 +1,7 @@
 ﻿import { useState } from 'react'
 import { useAuth }  from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
+import { API_BASE } from '../services/api'
 
 export default function ProfilePage({ onNav, push }) {
     const { user, logout }                         = useAuth()
@@ -24,7 +25,7 @@ export default function ProfilePage({ onNav, push }) {
         setLoading(true); setError('')
         try {
             const token = localStorage.getItem('modex_token') || sessionStorage.getItem('modex_token') || ''
-            const res = await fetch('/api/users/me', {
+            const res = await fetch(API_BASE + '/api/users/me', {
                 method: 'PUT',
                 headers: { 'Content-Type':'application/json', Authorization:'Bearer '+token },
                 body: JSON.stringify(form)
@@ -48,7 +49,7 @@ export default function ProfilePage({ onNav, push }) {
         setLoading(true)
         try {
             const token = localStorage.getItem('modex_token') || sessionStorage.getItem('modex_token') || ''
-            const res = await fetch('/api/auth/change-password', {
+            const res = await fetch(API_BASE + '/api/auth/change-password', {
                 method: 'POST',
                 headers: { 'Content-Type':'application/json', Authorization:'Bearer '+token },
                 body: JSON.stringify({ currentPassword: pwForm.current, newPassword: pwForm.newPw })

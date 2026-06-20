@@ -1,12 +1,7 @@
-﻿const BASE = import.meta.env.VITE_API_URL || ''
-
-console.log('[DIAGNOSTICO] VITE_API_URL =', JSON.stringify(import.meta.env.VITE_API_URL))
-console.log('[DIAGNOSTICO] BASE final =', JSON.stringify(BASE))
-console.log('[DIAGNOSTICO] todas las env vars de Vite =', JSON.stringify(import.meta.env))
-// ───────────────────────────────────────────────────────────
+﻿export const API_BASE = import.meta.env.VITE_API_URL || ''
 
 export async function apiFetch(path, opts = {}, token = null) {
-    const res = await fetch(BASE + path, {
+    const res = await fetch(API_BASE + path, {
         ...opts,
         headers: {
             'Content-Type': 'application/json',

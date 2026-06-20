@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useCart } from '../context/CartContext'
 import { useApi } from '../hooks/useApi'
+import { API_BASE } from '../services/api'
 
 function ProductImage({ category, name, imgUrl }) {
     const [err, setErr] = useState(false)
@@ -116,7 +117,7 @@ export default function WishlistPage({ push, onNav }) {
         // Enriquecer con datos frescos de la API en segundo plano
         Promise.all(
             saved.map(w =>
-                fetch('/api/products/' + w.id)
+                fetch(API_BASE + '/api/products/' + w.id)
                     .then(r => r.ok ? r.json() : w)
                     .catch(() => w)
             )

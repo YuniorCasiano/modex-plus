@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect } from 'react'
 import { useApi }  from '../../hooks/useApi'
 import { useAuth } from '../../context/AuthContext'
+import { API_BASE } from '../../services/api'
 import {
     AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
     XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
@@ -305,7 +306,7 @@ function AdminProducts({ push }) {
     useEffect(() => { load() }, [])
     const del = async id => {
         if (!confirm('Eliminar este producto?')) return
-        try { await fetch('/api/products/'+id, { method:'DELETE', headers:{ Authorization:'Bearer '+token } }); push('Eliminado'); load() } catch(e) { push(e.message,'error') }
+        try { await fetch(API_BASE + '/api/products/'+id, { method:'DELETE', headers:{ Authorization:'Bearer '+token } }); push('Eliminado'); load() } catch(e) { push(e.message,'error') }
     }
     return (
         <>
@@ -341,7 +342,7 @@ function ProductFormModal({ product, onSave, onClose, push }) {
     const save = async () => {
         setError(''); setLoading(true)
         try {
-            const res = await fetch(product?'/api/products/'+product.id:'/api/products', {
+            const res = await fetch(API_BASE + (product?'/api/products/'+product.id:'/api/products'), {
                 method:product?'PUT':'POST',
                 headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},
                 body:JSON.stringify({ ...form, price:parseFloat(form.price), stock:parseInt(form.stock), availableSizes: typeof form.availableSizes==='string'?form.availableSizes.split(',').map(s=>s.trim()):form.availableSizes, availableColors: typeof form.availableColors==='string'?form.availableColors.split(',').map(s=>s.trim()):form.availableColors })
@@ -387,7 +388,7 @@ function AdminOrders({ push }) {
 
     const updateStatus = async (id, status) => {
         try {
-            await fetch(`/api/orders/${id}/status?status=${status}`, {
+            await fetch(`${API_BASE}/api/orders/${id}/status?status=${status}`, {
                 method:'PUT', headers:{ Authorization:'Bearer '+token }
             })
             push(`Pedido #${id} → ${status}`)
@@ -503,7 +504,7 @@ function AdminInventory({ push }) {
     useEffect(()=>{ api('/api/products').then(d=>setProducts(extractList(d))).catch(()=>{}) },[])
     const addStock = async () => {
         try {
-            await fetch('/api/inventory', { method:'POST', headers:{'Content-Type':'application/json',Authorization:'Bearer '+token}, body:JSON.stringify({...form,quantity:parseInt(form.quantity)}) })
+            await fetch(API_BASE + '/api/inventory', { method:'POST', headers:{'Content-Type':'application/json',Authorization:'Bearer '+token}, body:JSON.stringify({...form,quantity:parseInt(form.quantity)}) })
             push('Stock agregado')
         } catch(e) { push(e.message,'error') }
     }

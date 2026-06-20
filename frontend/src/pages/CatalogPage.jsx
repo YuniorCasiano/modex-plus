@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect, useRef } from 'react'
 import { useCart } from '../context/CartContext'
 import Pagination from '../components/Pagination'
+import { API_BASE } from '../services/api'
 
 const CATS = ['Todos','VESTIDO','CAMISETA','PANTALON','FALDA','CHAQUETA','CONJUNTO','ACCESORIO']
 const OCES = ['Boda','Graduacion','Cumpleanos','Casual','Playa','Gala','Fiesta','Baby Shower','Pre-Boda','Navidad','Coctel','Trabajo']
@@ -301,7 +302,7 @@ export default function CatalogPage({ push, activeCat: propCat, activeSection: p
     useEffect(() => {
         setLoading(true)
         const url = cat !== 'Todos' ? '/api/products/category/' + cat : '/api/products'
-        fetch(url)
+        fetch(API_BASE + url)
             .then(r => r.json())
             .then(d => setProducts(Array.isArray(d) ? d : d.content || []))
             .catch(() => setProducts([]))

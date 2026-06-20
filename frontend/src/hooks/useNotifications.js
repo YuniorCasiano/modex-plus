@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { API_BASE } from '../services/api'
 
 const STORAGE_KEY = 'modex_notifications'
 
@@ -25,7 +26,7 @@ export function useNotifications(user) {
 
         const checkOrders = async () => {
             try {
-                const res = await fetch('/api/orders/my-orders', {
+                const res = await fetch(API_BASE + '/api/orders/my-orders', {
                     headers: { Authorization: 'Bearer ' + token }
                 })
                 if (!res.ok) return
