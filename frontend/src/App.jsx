@@ -18,8 +18,11 @@ import CheckoutPage      from './pages/CheckoutPage'
 import OrderConfirmPage  from './pages/OrderConfirmPage'
 import WishlistPage      from './pages/WishlistPage'
 import NotFoundPage      from './pages/NotFoundPage'
+import TermsPage         from './pages/TermsPage'
+import PrivacyPage       from './pages/PrivacyPage'
+import CookiesPage       from './pages/CookiesPage'
 
-const VALID_PAGES = ['catalog','orders','profile','auth','admin','checkout','confirm','wishlist']
+const VALID_PAGES = ['catalog','orders','profile','auth','admin','checkout','confirm','wishlist','terms','privacy','cookies']
 
 const IconLock = () => (
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color:'var(--c-text3)', marginBottom:12 }}>
@@ -143,6 +146,7 @@ function AppContent() {
                         onSwitch={() => setAuthMode(authMode==='login'?'register':'login')}
                         onSuccess={() => nav('catalog')}
                         push={push}
+                        onNav={nav}
                     />
                 )}
 
@@ -153,6 +157,10 @@ function AppContent() {
                 {page === 'wishlist' && (
                     user ? <WishlistPage push={push} onNav={nav} /> : <GuestGuard onLogin={() => nav('auth')} />
                 )}
+
+                {page === 'terms'   && <TermsPage   onNav={nav} />}
+                {page === 'privacy' && <PrivacyPage onNav={nav} />}
+                {page === 'cookies' && <CookiesPage onNav={nav} />}
 
                 {page === '404' && <NotFoundPage onNav={nav} />}
 

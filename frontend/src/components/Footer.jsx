@@ -19,6 +19,12 @@ export default function Footer({ onNav }) {
         </a>
     )
 
+    const LEGAL_LINKS = [
+        ['Términos y condiciones', 'terms'],
+        ['Política de privacidad', 'privacy'],
+        ['Cookies', 'cookies'],
+    ]
+
     return (
         <footer style={{ background:'var(--c-white)', borderTop:'1px solid var(--c-border)', marginTop:'3rem' }}>
             <div style={{ maxWidth:1280, margin:'0 auto', padding:'3rem 1.5rem 1.5rem' }}>
@@ -98,8 +104,9 @@ export default function Footer({ onNav }) {
                         © {year} Modex Plus. Todos los derechos reservados.
                     </div>
                     <div style={{ display:'flex', gap:'1.5rem' }}>
-                        {['Términos y condiciones', 'Política de privacidad', 'Cookies'].map(label => (
-                            <button key={label} style={{ background:'none', border:'none', color:'var(--c-text3)', fontFamily:'var(--sans)', fontSize:'0.78rem', cursor:'pointer', padding:0 }}
+                        {LEGAL_LINKS.map(([label, page]) => (
+                            <button key={page} onClick={() => onNav(page)}
+                                    style={{ background:'none', border:'none', color:'var(--c-text3)', fontFamily:'var(--sans)', fontSize:'0.78rem', cursor:'pointer', padding:0 }}
                                     onMouseEnter={e=>e.currentTarget.style.color='var(--c-primary)'}
                                     onMouseLeave={e=>e.currentTarget.style.color='var(--c-text3)'}>
                                 {label}

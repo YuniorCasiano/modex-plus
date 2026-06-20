@@ -2,7 +2,7 @@
 import { useAuth } from '../context/AuthContext'
 import { API_BASE } from '../services/api'
 
-export default function AuthPage({ mode, onSwitch, onSuccess, push }) {
+export default function AuthPage({ mode, onSwitch, onSuccess, push, onNav }) {
     const { login } = useAuth()
     const [fullName, setFullName] = useState('')
     const [email,    setEmail]    = useState('')
@@ -155,6 +155,21 @@ export default function AuthPage({ mode, onSwitch, onSuccess, push }) {
                         {isLogin ? 'Registrate' : 'Inicia sesion'}
                     </button>
                 </div>
+
+                {!isLogin && (
+                    <div style={{ textAlign:'center', marginTop:'1.25rem', fontSize:'0.78rem', color:'var(--c-text3)', lineHeight:1.6 }}>
+                        Al crear una cuenta aceptas nuestros{' '}
+                        <button onClick={() => onNav('terms')}
+                                style={{ background:'none', border:'none', color:'var(--c-text2)', cursor:'pointer', fontFamily:'var(--sans)', fontSize:'0.78rem', textDecoration:'underline', padding:0 }}>
+                            Términos y condiciones
+                        </button>{' '}
+                        y nuestra{' '}
+                        <button onClick={() => onNav('privacy')}
+                                style={{ background:'none', border:'none', color:'var(--c-text2)', cursor:'pointer', fontFamily:'var(--sans)', fontSize:'0.78rem', textDecoration:'underline', padding:0 }}>
+                            Política de privacidad
+                        </button>.
+                    </div>
+                )}
             </div>
         </div>
     )

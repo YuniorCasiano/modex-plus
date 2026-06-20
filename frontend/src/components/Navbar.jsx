@@ -7,7 +7,7 @@ import NotificationBell from './NotificationBell'
 const SECTIONS = [
     { id:'mujer',  label:'Mujer',  cats:['VESTIDO','CAMISETA','FALDA','CONJUNTO','CHAQUETA','ACCESORIO'] },
     { id:'hombre', label:'Hombre', cats:['CAMISETA','PANTALON','CHAQUETA','ACCESORIO'] },
-    { id:'ninos',  label:'Ninos',  cats:['VESTIDO','CAMISETA','PANTALON','CONJUNTO'] },
+    { id:'niños',  label:'Niños',  cats:['VESTIDO','CAMISETA','PANTALON','CONJUNTO'] },
 ]
 
 export default function Navbar({ page, onNav, onAuthClick, onSectionSelect, onCatSelect, notifications=[], unread=0, markAllRead, markRead, clearAll }) {
