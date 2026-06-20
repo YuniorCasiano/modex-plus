@@ -1,0 +1,23 @@
+// ============================================================
+// ErrorResponse.java - Forma del JSON de error
+// Unico para todo el monolito (antes duplicado en cada
+// microservicio con la misma estructura exacta).
+// ============================================================
+
+package com.modex.monolith.common;
+
+import java.time.LocalDateTime;
+
+public record ErrorResponse(
+        int status,
+        String error,
+        String message,
+        String path,
+        LocalDateTime timestamp
+) {
+    public static ErrorResponse of(int status, String error,
+                                   String message, String path) {
+        return new ErrorResponse(status, error, message,
+                path, LocalDateTime.now());
+    }
+}

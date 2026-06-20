@@ -1,0 +1,58 @@
+# ============================================================
+# docker-compose.yml - modex-monolith (solo lo necesario)
+# Version reducida del docker-compose.yml original.
+# El monolito no usa Kafka, Zookeeper, Redis, Prometheus,
+# Grafana ni Zipkin - solo MongoDB y PostgreSQL.
+# Comando para ejecutar: docker-compose up -d
+# Comando para detener:  docker-compose down
+# ============================================================
+
+version: '3.9'
+
+networks:
+  modex-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  mongo_data:
+
+services:
+
+  postgresql:
+    image: postgres:16-alpine
+    container_name: postgresql
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ropa_store
+      POSTGRES_USER: ropa_user
+      POSTGRES_PASSWORD: "123456"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - modex-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ropa_user -d ropa_store" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  mongodb:
+    image: mongo:7.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo_user
+      MONGO_INITDB_ROOT_PASSWORD: mongo_pass
+      MONGO_INITDB_DATABASE: modex_db
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - modex-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
